@@ -1,0 +1,5 @@
+---
+ - name: ajout de sshpass
+   package:
+         name: sshpass
+         state: present
