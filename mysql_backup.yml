@@ -1,0 +1,12 @@
+# This will name the backup file /nfs/backups/HOSTNAME-Mon.mysqldump
+# where Mon will be replaced by the abbreviated day of the week, resulting
+# in daily backups on a rolling weekly cycle
+---
+- hosts: all
+  become: yes
+  become_user: root
+  roles:
+  - role: ome.mysql_backup
+    mysql_backup_dir: /vars/backups/databases
+    mysql_backup_filename_format: "{{ ansible_hostname }}-%Y%m%d.sql.gz"
+    mysql_backup_minimum_expected_size: 100000
