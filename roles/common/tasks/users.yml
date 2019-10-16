@@ -1,11 +1,12 @@
 ---
  - name: "création utilisateur"
    user:
-            name: "nouveaucompte"
-            password: '*'
-            groups:
-                  - sudo
-                  - itescia
-            state: present 
-            createhome: yes
-            home: /home/nouveaucompte
+            name: "{{item.name}}"
+            password: "{{item.password}}"
+   loop: "{{utilisateurs}}"
+   #         groups:
+   #               - sudo
+   #               - itescia
+   #         state: present 
+   #         createhome: yes
+   #         home: /home/nouveaucompte

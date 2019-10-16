@@ -1,0 +1,11 @@
+---
+packages:
+        - htop
+        - sshpass
+utilisateurs:
+
+        - name: "ludovic"
+          password: '*'
+
+        - name: "xav"
+          password: '*'
