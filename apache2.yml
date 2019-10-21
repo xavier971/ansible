@@ -1,0 +1,5 @@
+- hosts: all
+  vars_files:
+          - roles/common/vars/main.yml
+  roles:
+          - { role: geerlingguy.apache }
