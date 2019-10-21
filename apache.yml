@@ -1,0 +1,33 @@
+---
+- name: installation d'un serveur web
+  hosts: all
+  remote_user: root
+ 
+  tasks:
+      - name: install apache php
+        apt: name={{ item }}
+        with_items:
+                - apache2
+                - php
+
+      - name: ajout d'un user
+        apt: name={{ user }}
+
+      - name: dossier user
+        file: path=/var/www/{{ domain }} state-directory owner={{ user }} group={{ user }} mode=0755
+
+      - name: virtualhost
+        template: src=templates/virtualhost.conf dest=/etc/apache2/sites-available/{{ domain }}.conf  
+      - name: a2ensite
+        command: a2ensite {{ domain }}
+        args:
+                creates: /etc/apache2/sites-enabled/{{ domain }}.conf
+        notify: relancer Apache
+        copy: src=phpinfo.php dest=/var/www/{{ domain }} owner={{ user }} group={{ user }} mode=0644
+        handlers:
+            - name: relancer Apache
+              service: name=apache2 state=reloaded
+
+        #apache_listen_ip:'*'
+        #apache_listen_port: 80
+        #apache_listen_port_ssl: 443
